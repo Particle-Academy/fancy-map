@@ -35,9 +35,12 @@ export function googleProvider(options: GoogleProviderOptions): MapProvider {
   return {
     name: "google",
     async mount(host: HTMLElement, mount: MapMountOptions): Promise<MapHandle> {
-      const { Loader } = await import("@googlemaps/js-api-loader");
-      const loader = new Loader({ apiKey: options.apiKey, version: options.version ?? "weekly" });
-      const google = await loader.load();
+      const { setOptions, importLibrary } = await import("@googlemaps/js-api-loader");
+      // js-api-loader v2 functional API. Loading these libraries bootstraps the
+      // global `google.maps` namespace the rest of this provider uses.
+      setOptions({ key: options.apiKey, v: options.version ?? "weekly" });
+      await importLibrary("maps");
+      await importLibrary("marker");
 
       const map = new google.maps.Map(host, {
         center: { lat: mount.view.center.lat, lng: mount.view.center.lng },
