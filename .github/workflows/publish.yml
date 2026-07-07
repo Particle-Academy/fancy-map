@@ -1,0 +1,37 @@
+name: Publish to npm
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Install
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      # BOOTSTRAP (first publish only): npm won't let you configure a Trusted
+      # Publisher for a package that doesn't exist yet, so the first release
+      # authenticates with a 7-day granular token in the NPM_TOKEN repo secret.
+      # After it lands, configure the Trusted Publisher on npmjs.com, revoke the
+      # token, and delete the `env:` line below — leaving pure OIDC provenance.
+      - name: Publish
+        run: npx -y npm@latest publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
