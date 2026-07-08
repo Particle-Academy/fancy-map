@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [main]
 
+# Least-privilege: CI only checks out + builds — read-only access is enough.
+permissions:
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
