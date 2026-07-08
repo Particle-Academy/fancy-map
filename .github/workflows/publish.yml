@@ -26,12 +26,7 @@ jobs:
       - name: Build
         run: npm run build
 
-      # BOOTSTRAP (first publish only): npm won't let you configure a Trusted
-      # Publisher for a package that doesn't exist yet, so the first release
-      # authenticates with a 7-day granular token in the NPM_TOKEN repo secret.
-      # After it lands, configure the Trusted Publisher on npmjs.com, revoke the
-      # token, and delete the `env:` line below — leaving pure OIDC provenance.
+      # Pure OIDC / Trusted Publishing — no token. npm 11.5+ (via npx) is
+      # required for OIDC; the runner's bundled npm 10 can't do it.
       - name: Publish
         run: npx -y npm@latest publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -1,6 +1,6 @@
 {
   "name": "@particle-academy/fancy-map",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Engine-agnostic Map component for the Fancy UI suite — one <Map> API over swappable providers (OpenStreetMap via Leaflet, Google Maps), live position tracking, and a Human+ MCP bridge for cohabited human/agent maps.",
   "repository": {
     "type": "git",
