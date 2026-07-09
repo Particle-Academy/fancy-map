@@ -29,4 +29,4 @@ jobs:
       # Pure OIDC / Trusted Publishing — no token. npm 11.5+ (via npx) is
       # required for OIDC; the runner's bundled npm 10 can't do it.
       - name: Publish
-        run: npx -y npm@latest publish --provenance --access public
+        run: npx -y npm@11.18.0 publish --provenance --access public
