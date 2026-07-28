@@ -1,7 +1,7 @@
 {
   "name": "@particle-academy/fancy-map",
   "version": "0.1.2",
-  "description": "Engine-agnostic Map component for the Fancy UI suite — one <Map> API over swappable providers (OpenStreetMap via Leaflet, Google Maps), live position tracking, and a Human+ MCP bridge for cohabited human/agent maps.",
+  "description": "Engine-agnostic Map component for the Fancy UI suite \u2014 one <Map> API over swappable providers (OpenStreetMap via Leaflet, Google Maps), live position tracking, and a Human+ MCP bridge for cohabited human/agent maps.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Particle-Academy/fancy-map.git"
@@ -52,7 +52,7 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
-    "lint": "tsc --noEmit",
+    "lint": "tsc --noEmit && eslint .",
     "clean": "rm -rf dist",
     "prepublishOnly": "tsup"
   },
@@ -88,11 +88,14 @@
     "@types/leaflet": "^1.9.12",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
+    "eslint": "^10.8.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
     "leaflet": "^1.9.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tsup": "^8.5.0",
-    "typescript": "^5.8.0"
+    "typescript": "^5.8.0",
+    "typescript-eslint": "^8.65.0"
   },
   "publishConfig": {
     "access": "public"
