@@ -15,6 +15,31 @@ upgrading.
 
 ## [Unreleased]
 
+## 0.2.1 — 2026-08-18
+
+### Added
+
+- **Say so when Leaflet's stylesheet is missing.** `leaflet/dist/leaflet.css`
+  has always been the consumer's to import (the README says so), but forgetting
+  it fails silently and in a way that reads as a completely different bug: tiles
+  are still fetched and painted, so a map-shaped thing appears. What actually
+  went wrong is that `.leaflet-tile { position: absolute }` never applied, so
+  every tile lays out in normal flow and stacks 256px apart. The tile transforms
+  are all *correct*, which is exactly what makes it look like broken geometry
+  rather than broken CSS.
+
+  That misdiagnosis is not hypothetical — it cost the showcase a held-back map
+  screen, filed as a stale-container-measurement bug that did not exist.
+
+  `leafletProvider()` now checks once per page at mount and, if the stylesheet
+  is absent, logs an error naming the exact import. `leafletStylesheetMissing()`
+  is exported from `@particle-academy/fancy-map/leaflet` if you want to assert
+  it yourself.
+
+  **Nothing to do on upgrade** — if your map already renders, the check is
+  silent. If it fires, it is telling you about a bug you already had.
+
+
 ## 0.2.0 — 2026-08-07
 
 ### Changed

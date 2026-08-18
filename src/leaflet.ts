@@ -58,6 +58,50 @@ function ensurePinStyle(): void {
   document.head.appendChild(el);
 }
 
+/**
+ * Is Leaflet's own stylesheet missing?
+ *
+ * Leaflet ships `leaflet/dist/leaflet.css` and the consumer imports it; this
+ * package cannot import it for them without assuming their bundler handles CSS.
+ * What it CAN do is notice, because the failure is otherwise silent and reads as
+ * a different bug entirely: tiles are still fetched and painted, so a map-shaped
+ * thing appears, but `.leaflet-tile { position: absolute }` never applied and
+ * every tile lays out in normal flow, stacking 256px apart. The tile transforms
+ * are all correct, which is what makes it look like broken geometry rather than
+ * broken CSS.
+ *
+ * Probes `.leaflet-pane`, which leaflet.css positions absolutely, using a
+ * detached-but-rendered element so nothing is visible and nothing is left
+ * behind.
+ */
+let warnedAboutStylesheet = false;
+
+/** Say it once per page, not once per map. */
+function warnIfStylesheetMissing(): void {
+  if (warnedAboutStylesheet || !leafletStylesheetMissing()) return;
+  warnedAboutStylesheet = true;
+  console.error(
+    "[fancy-map] Leaflet's stylesheet is not loaded, so tiles will stack instead " +
+      "of tiling. Add `import \"leaflet/dist/leaflet.css\";` once, anywhere in your app.",
+  );
+}
+
+export function leafletStylesheetMissing(): boolean {
+  if (typeof document === "undefined" || typeof getComputedStyle !== "function") {
+    return false;
+  }
+  const probe = document.createElement("div");
+  probe.className = "leaflet-pane";
+  // Must be in the document to have a computed style, and must not affect it.
+  probe.style.display = "none";
+  document.body.appendChild(probe);
+  try {
+    return getComputedStyle(probe).position !== "absolute";
+  } finally {
+    probe.remove();
+  }
+}
+
 export function leafletProvider(options: LeafletProviderOptions = {}): MapProvider {
   return {
     name: "leaflet",
@@ -66,6 +110,7 @@ export function leafletProvider(options: LeafletProviderOptions = {}): MapProvid
       const L = ((mod as unknown as { default?: typeof import("leaflet") }).default ??
         mod) as typeof import("leaflet");
       ensurePinStyle();
+      warnIfStylesheetMissing();
 
       const map = L.map(host, { zoomControl: true, ...(options.mapOptions ?? {}) }).setView(
         [mount.view.center.lat, mount.view.center.lng],
