@@ -1,5 +1,7 @@
 # @particle-academy/fancy-map
 
+[![Fancified](art/fancified.svg)](https://particle.academy)
+
 Engine-agnostic **Map** component for the [Fancy UI](https://ui.particle.academy) suite — one `<Map>` API over swappable providers, live position tracking, and a Human+ MCP bridge so a human and an agent can share the same map.
 
 - **One API, many engines.** Render with **OpenStreetMap** (via Leaflet) or **Google Maps** today; swapping is a one-line `provider` change. Adding MapLibre / Mapbox GL later is just another provider.
