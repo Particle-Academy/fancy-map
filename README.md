@@ -2,7 +2,7 @@
 
 [![Fancified](art/fancified.svg)](https://particle.academy)
 
-Engine-agnostic **Map** component for the [Fancy UI](https://ui.particle.academy) suite — one `<Map>` API over swappable providers, live position tracking, and a Human+ MCP bridge so a human and an agent can share the same map.
+Engine-agnostic **Map** component for the [Fancy Dev Kit](https://ui.particle.academy) — one `<Map>` API over swappable providers, live position tracking, and a Human+ MCP bridge so a human and an agent can share the same map.
 
 - **One API, many engines.** Render with **OpenStreetMap** (via Leaflet) or **Google Maps** today; swapping is a one-line `provider` change. Adding MapLibre / Mapbox GL later is just another provider.
 - **Controlled + JSON-friendly.** `view` + `markers` + `selectedId` are controlled props; markers are a plain JSON array an agent can emit directly.
@@ -146,7 +146,7 @@ Full guide: [`docs/Map.md`](./docs/Map.md).
 
 MIT
 
-## ⭐ Star Fancy UI
+## ⭐ Star Fancy Dev Kit
 
 If this helps, a star on [github.com/Particle-Academy/fancy-map](https://github.com/Particle-Academy/fancy-map) helps the kit grow.
 
